@@ -285,6 +285,39 @@ app.post('/result', async (req, res) => {
   }
 });
 
+app.post('/cancel/:jobId', async (req, res) => {
+  const jobId = req.params.jobId;
+  console.log(`Received cancellation request for job: ${jobId}`);
+  
+  const job = jobStore[jobId];
+  if (!job) {
+    console.log(`Job ${jobId} not found for cancellation`);
+    return res.status(404).json({ error: 'Job not found' });
+  }
+  
+  // Only allow canceling jobs that are in-progress
+  if (job.status !== 'pending') {
+    console.log(`Cannot cancel job ${jobId} with status ${job.status}`);
+    return res.status(400).json({ error: 'Job cannot be cancelled in its current state' });
+  }
+  
+  try {
+    job.status = 'canceled';
+    job.currentStep = 'canceled';
+    job.endTime = Date.now();
+    
+    console.log(`Job ${jobId} marked as canceled`);
+    
+    await deleteJobFolder(jobId);
+    console.log(`Resources cleaned up for canceled job ${jobId}`);
+    
+    res.json({ success: true, message: 'Job canceled successfully' });
+  } catch (err) {
+    console.error(`Error canceling job ${jobId}:`, err);
+    res.status(500).json({ error: 'Failed to cancel job', message: err.message });
+  }
+});
+
 app.get('/status/:jobId', (req, res) => {
   const jobId = req.params.jobId;
   console.log(`Status check for job: ${jobId}`);

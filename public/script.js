@@ -64,9 +64,12 @@ document.getElementById("roll-number-form").addEventListener("submit", async fun
     }
     
     statusPanel.innerHTML = `
-      <div class="mb-2">
-        <h5 class="fw-bold mb-1">Job Status</h5>
-        <div class="job-id-badge" id="job-id-badge">Job ID: -</div>
+      <div class="mb-2 d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="fw-bold mb-1">Job Status</h5>
+          <div class="job-id-badge" id="job-id-badge">Job ID: -</div>
+        </div>
+        <button id="cancel-job-btn" class="btn btn-sm btn-outline-danger">Cancel Job</button>
       </div>
       <div class="status-grid">
         <div class="status-item">
@@ -100,6 +103,44 @@ document.getElementById("roll-number-form").addEventListener("submit", async fun
         <div id="recent-rolls" class="recent-rolls"></div>
       </div>
     `;
+    
+    // Add cancel job button listener after creating the panel
+    document.getElementById("cancel-job-btn").addEventListener("click", async function() {
+      const jobId = this.getAttribute('data-job-id');
+      if (!jobId) {
+        log("❌ Cannot cancel job: No active job ID found.");
+        return;
+      }
+      
+      if (confirm("Are you sure you want to cancel this job?")) {
+        try {
+          log("⏳ Canceling job...");
+          const cancelRes = await fetch(`/cancel/${jobId}`, {
+            method: "POST"
+          });
+          
+          if (!cancelRes.ok) {
+            const errorData = await cancelRes.json();
+            throw new Error(errorData.error || "Unknown error");
+          }
+          
+          const result = await cancelRes.json();
+          log(`✅ ${result.message}`);
+          
+          // Update UI to reflect canceled state
+          progressBar.style.width = "100%";
+          progressBar.className = "progress-bar bg-warning";
+          progressText.textContent = "Job cancelled by user";
+          
+          document.getElementById("current-step").textContent = "Canceled";
+          
+        } catch (err) {
+          console.error("Job cancellation error:", err);
+          log(`❌ Failed to cancel job: ${err.message}`);
+        }
+      }
+    });
+    
     return statusPanel;
   };
 
@@ -134,10 +175,13 @@ document.getElementById("roll-number-form").addEventListener("submit", async fun
 
     if (!submitRes.ok) throw new Error("Job submission failed.");
 
+    // Update the submit response handling to store the jobId
     const { jobId } = await submitRes.json();
     log(`📦 Job ID: ${jobId}. Polling for progress...`);
 
     createStatusPanel();
+    const cancelButton = document.getElementById("cancel-job-btn");
+    cancelButton.setAttribute('data-job-id', jobId);
     document.getElementById("job-id-badge").textContent = `Job ID: ${jobId.substring(0, 8)}...`;
 
     const poll = setInterval(async () => {
@@ -193,6 +237,11 @@ document.getElementById("roll-number-form").addEventListener("submit", async fun
           progressBar.style.width = statusData.progressPercent || "0%";
         } else {
           clearInterval(poll);
+          
+          // Disable cancel button when job is no longer in pending state
+          const cancelButton = document.getElementById("cancel-job-btn");
+          cancelButton.disabled = true;
+          cancelButton.classList.add("disabled");
 
           if (statusData.status === "done") {
             const { downloadURL, notFoundCount, successfulCount } = statusData;
@@ -216,6 +265,10 @@ document.getElementById("roll-number-form").addEventListener("submit", async fun
             } else {
               log("❌ No valid roll numbers found. Preview not shown.");
             }
+          } else if (statusData.status === "canceled") {
+            progressBar.className = "progress-bar bg-warning";
+            progressText.textContent = "Job was canceled";
+            log("⚠️ Job was canceled by user");
           } else {
             log(`❌ Error: ${statusData.error || "Unknown failure."}`);
           }
@@ -324,6 +377,13 @@ const addStyles = () => {
       font-family: monospace;
       height: 150px;
       overflow-y: auto;
+    }
+    #cancel-job-btn {
+      min-width: 100px;
+    }
+    #cancel-job-btn.disabled {
+      pointer-events: none;
+      opacity: 0.6;
     }
   `;
   document.head.appendChild(style);
