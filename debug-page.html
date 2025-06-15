@@ -1,0 +1,785 @@
+<!DOCTYPE html><html lang="en"><head><title>
+	MBM :: Examination Results
+</title><meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <style type="text/css">
+        .tableheadingmain {
+            font-family: Arial;
+            font-weight: bold;
+        }
+
+        .leftcol .ins .slimScrollDiv {
+            height: 330px !important;
+        }
+
+        .leftcol .ins #downlaod {
+            height: 330px !important;
+        }
+
+        .rightcol .apiscroll .slimScrollDiv {
+            height: 330px !important;
+        }
+
+        .rightcol #application {
+            height: 330px !important;
+        }
+
+        .instructiontbl a {
+            color: #000dff;
+        }
+
+        .subheadingpint td {
+            color: #ca5400 !important;
+        }
+
+        .gradetabs {
+            list-style: none;
+            float: left;
+            width: 100%;
+            margin: 10px 0 10px 0;
+            border-bottom: solid 1px #316ba7;
+        }
+
+        .gradetabs li {
+                float: left;
+            }
+
+        .gradetabs li a {
+                    background: #316ba7;
+                    padding: 5px 10px;
+                    float: left;
+                    font-size: 13px;
+                    font-weight: bold;
+                    border-radius: 5px 5px 0 0;
+                    color: #fff;
+                    margin-right: 5px;
+                }
+
+        .gradetabs li a:hover {
+                        background: #ff6a00;
+                    }
+
+        .affilationloginmain {
+            margin: 0 auto;
+            width: 1000px;
+        }
+         
+        .apiscroll .header-style th, .apiscroll .header-style td {
+            border: solid 1px #47629d !important;
+            color: #47629d !important;
+            background: none !important;
+            font-size: 13px;
+        }
+
+        .item-style td {
+            font-size: 12px !important;
+        }
+
+        .item-style:hover {
+            color: #fff !important;
+            background: #47629d !important;
+        }
+
+        .item-style:hover a {
+                color: #fff;
+            }
+    </style>
+
+    
+    <link href="../include/bootstrap/bootstrap.css" rel="stylesheet"><link href="../include/bootstrap/style_bootstrap.css" rel="stylesheet"><link href="../App_Themes/skyblue/default.css" type="text/css" rel="stylesheet"><link href="../App_Themes/skyblue/GridviewScroll.css" type="text/css" rel="stylesheet"><link href="../App_Themes/skyblue/responsive.css" type="text/css" rel="stylesheet"><link href="../App_Themes/skyblue/stylesheet.css" type="text/css" rel="stylesheet"></head>
+
+<body class="result_declare" style="">
+    <div class="headermain">
+        <div class="empheader">
+            <div class="col-md-6">
+                <div class="">
+                    <div class="logo">
+                        <a href="#" style="float: left; margin: 13px 0 0 0;">
+                            
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ul class="header_pnl_link">
+                    <li class="back-icon"><a href="ExamResult.aspx">BACK</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section id="main-content">
+        <form name="form1" method="post" action="./ExamResultDeclare.aspx" id="form1">
+<div>
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZLpsGiQWJm4q4S0nrN41DBHCfZs1j4ui1QcvbegECjQ0cfyS3A2&amp;t=638628422640000000" type="text/javascript"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+var Anthem_FormID = "form1";
+//]]>
+</script>
+<script src="/WebResource.axd?d=3aJe5EVz5a65qlRd-GY67iYoy7ojYTwR-tSd9c0CDsUmcHt1KR-yKVXNeH-qFlPglp1xPCQ8ZdH4bXP1PBxgFi4GWT01&amp;t=638181276180000000" type="text/javascript"></script>
+<script src="/WebResource.axd?d=JoBkLzP19aTuxbWOhHobYn0gtx8atRnzU5XCgjqGt9GuU7aHKtN1F_sxVWXjKXiM9y657w2&amp;t=638628422640000000" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="53C8D841">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="OsbEdxazLVlLlHEzVytTtFeyV2WQYRxqTaEWphV33YUIFCGhElJC/ETK3oXLJn/wkUvl/+ULzn2IfVukrp54aE9LuXRTBhEkWXoB/qZ8LBCdCh7Gayq3tBq0l4tOUWoFxhat2/g5o15q16bctKT1KPrPwaVKihFRD7bRhxZhSIEjnpu1X5j+jd0nO4DK2OZCYuUroSn9RMje5kd3Gqfy+N6fcc5GavUxMuUeXhRJtu3xRfGEpaZc4PatzvDFuq3JY6PibqSEBP4PxCoNqPvXuaYSQBJt6bA3L29xaM1fJ/s3a1WAJdWdIa4pChiu5n1V9pGpo4KwLOLXV5bCrxcdWwcZKrzbdG48h3hCbzJm318rgkO/2jMbHUqKpgPywsZNxVb4KTRtNiuXpYen4EUGtlVzCqokKPiIQFeGB0vMdEDpBBXpG3dOlP3tt+qGGJyYm+IzqquntUjfYtdg1ygW8ndJ7flotwR1iYkjMt85i5ctaHT9GLM9763PWaxVDKtRrJqKE5GQZqlGEWXlmYGNW24BvacoKJb8mLLQwnpbyTFVO6Lbpd93pB196AJBirP++nOjVwmcpI/LCaSnrvR0vKiilwNLFGaNYikft7j1ETaNaMweTRToFl2bL4nT3a8ZmqHInxqXriNs9TKmI35ic1RYAUOf6wygVHWzjPSYOUg2tZ2WiKpzQS+gaQh1FvuS0brK8wRnKbFDBMQklvXXrQtY63FYllb1yj1NtwpUEJJgWPRrGIQg7ZDlWJXgPpYJKeWVsJySBi20gidAhfUg+Sy3KQhz6Ji1DRPbMIirKhAlQWJGptxyg4p3u9SW+jZtdQLTuQCAAEqyCdJb67QhBuih6LFyIL3V7khhc9IniQHpyo3vk854wykLtnPiPDm0ywqoG2UdcFqONR/VGNJEQKa0NAr2XOExSm9HghJccMfHB4vv8Gr9cd+jBXUqIYzorm87dBdhA5ovHHpcRm6mZAgNhaDrOjMtpNVXowb9FlywVXfTaouf9UF0KBUjLlQ9iLVPvPlpjsDq8pv5KddAc5ENCh0Zu19CtEiq90/xA2JwZQj+k2PjZi733kx1U0NuZYOep48X2F1IyiZnPsHZRXXLfchwAHb8XSPeG7lvz0X6oOKT6JveV/LpuC4mBx+u916HKZeJTsiHzhl9ZTU1h6TCD8boWYOgeFh+ikjEcglCBVblFSDiu6tvSO95TW+qhv9QMA==">
+</div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="affilationloginmain" style="min-height: 500px; width: 90%;">
+                        <div style="float: left; width: 100%; padding: 10px; background: #fff; min-height: 500px;">
+                            <div style="float: left; width: 100%;">
+                                <marquee scrollamount="3" direction="left" loop="true" style="font-size: 12px;">
+                                       <font color="red">For any query related to results, Students are advice to contact between 11 AM to 5 PM in working days at E-mail: mbmucare@gmail.com  !! </font></marquee>
+                            </div>
+                            <div style="text-align: center; font-size: 16px; font-family: Calibri;">
+                                <span id="Anthem_lblmessage__"><span id="lblmessage" style="color:Blue;font-weight:bold;">ODD SEMESTER EXAMINATION RESULTS (2024-25)</span></span>
+                                <br>
+                                <span style="font-size: 13.4px;"><strong>Search Your Degree Here:</strong></span>
+                                <span id="Anthem_txtsearch__"><input name="txtsearch" type="text" maxlength="240" id="txtsearch" onchange="javascript:Anthem_FireCallBackEvent(this,event,'txtsearch','',false,'','','',true,null,null,null,true,true);" style="height:25px;width:250px;"></span>
+                                <span id="Anthem_btngetsearch__"><input type="submit" name="btngetsearch" value="Search" onclick="javascript:Anthem_FireCallBackEvent(this,event,'btngetsearch','',true,'','','WAIT...',true,null,null,null,true,true);return false;" id="btngetsearch" class="button-common" cellpadding="0" cellspacing="0"></span>
+                                <span id="Anthem_lblmessageshow__"><span id="lblmessageshow" class="lblmessage"></span></span>
+                            </div>
+                            <br>
+                            
+
+                            
+
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div id="Anthem_pnalpg__"><div id="pnalpg">
+	
+                                        <table width="100%" class="table" cellspacing="0" cellpadding="0" border="0">
+                                            <tbody><tr>
+                                                <td class="tableheadingmain" style="background: #47629d; color: #fff; font-size: 14px;">
+                                                    <span id="Anthem_lblPostGraduationResult__"><span id="lblPostGraduationResult">Post Graduation Result (2024 - 2025)</span></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="apiscroll">
+                                                    <div class="" style="width: 100%; border: none; float: left;">
+                                                        <div id="Div1" class="divDownload">
+                                                            <div class="" style="width: 100%;">
+                                                                <ul style="list-style-type: none; width: 100%; padding: 0; margin-left: 80px;">
+                                                                    <div id="Anthem_dgResultPG__"><table class="table-grid-view" cellspacing="1" cellpadding="1" rules="all" border="1" id="dgResultPG" style="width:100%;border:1px solid #D4D4D4;border-collapse:collapse;">
+		<tbody><tr class="header-style">
+			<td>S.No.</td><td>Name of the Result</td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                                    1
+                                                                                </td><td align="left">
+                                                                                    <span id="Anthem_dgResultPG_ctl02_lnkResultPG__"><a id="dgResultPG_ctl02_lnkResultPG" href="javascript:__doPostBack('dgResultPG$ctl02$lnkResultPG','')">ME IN MECHANICAL ENGINEERING Ist SEM ( Production Industrial Engineering )  Examination Result</a></span>
+                                                                                    <span id="Anthem_dgResultPG_ctl02_ctl00__"><img id="dgResultPG_ctl02_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                                    <br>
+                                                                                    <span id="Anthem_dgResultPG_ctl02_lbltext__"><span id="dgResultPG_ctl02_lbltext" style="font-size: 12px; font-family: Calibri">06/06/2025</span></span>
+                                                                                    <span id="Anthem_dgResultPG_ctl02_lblConfig__"></span>
+                                                                                </td>
+		</tr>
+	</tbody></table></div>
+                                                                </ul>
+                                                            </div>
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <span id="Anthem_lblmessagepg__"><span id="lblmessagepg" class="lblmessage" style="color:Red;font-style: italic"></span></span>
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+                                    
+</div></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div id="Anthem_pnalug__"><div id="pnalug">
+	
+                                        <table width="100%" cellspacing="0" cellpadding="0" class="table" border="0">
+                                            <tbody><tr>
+                                                <td class="tableheadingmain" style="background: #47629d; color: #fff; font-size: 14px;">
+                                                    <span id="Anthem_lblUnderGraduationResult__"><span id="lblUnderGraduationResult">Under Graduation Result (2024 - 2025)</span></span>
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="apiscroll">
+                                                    <div style="width: 98% !important;">
+                                                        <ul style="list-style-type: none; width: 100%; padding: 0;">
+                                                            <div id="Anthem_dgResultUG__"><table class="table-grid-view" cellspacing="1" cellpadding="1" rules="all" border="1" id="dgResultUG" style="width:100%;border:1px solid #D4D4D4;border-collapse:collapse;">
+		<tbody><tr class="header-style">
+			<td>S.No.</td><td>Name of the Result</td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            1
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl02_lnkResultUG__"><a id="dgResultUG_ctl02_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl02$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Electronics &amp; Electrical Engineering(Equivalent to Electrical &amp; Electronics Engineering) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl02_ctl00__"><img id="dgResultUG_ctl02_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl02_lbltext__"><span id="dgResultUG_ctl02_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl02_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            2
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl03_lnkResultUG__"><a id="dgResultUG_ctl03_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl03$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Electronics &amp; Computer Engineering(ECC) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl03_ctl00__"><img id="dgResultUG_ctl03_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl03_lbltext__"><span id="dgResultUG_ctl03_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl03_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            3
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl04_lnkResultUG__"><a id="dgResultUG_ctl04_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl04$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Information Technology(IT) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl04_ctl00__"><img id="dgResultUG_ctl04_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl04_lbltext__"><span id="dgResultUG_ctl04_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl04_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            4
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl05_lnkResultUG__"><a id="dgResultUG_ctl05_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl05$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Mechanical Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl05_ctl00__"><img id="dgResultUG_ctl05_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl05_lbltext__"><span id="dgResultUG_ctl05_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl05_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            5
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl06_lnkResultUG__"><a id="dgResultUG_ctl06_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl06$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Mining Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl06_ctl00__"><img id="dgResultUG_ctl06_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl06_lbltext__"><span id="dgResultUG_ctl06_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl06_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            6
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl07_lnkResultUG__"><a id="dgResultUG_ctl07_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl07$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( COMPUTER SCIENCE &amp; ENGINEERING(CSE) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl07_ctl00__"><img id="dgResultUG_ctl07_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl07_lbltext__"><span id="dgResultUG_ctl07_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl07_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            7
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl08_lnkResultUG__"><a id="dgResultUG_ctl08_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl08$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Electronics &amp; Communication Engineering(ECE) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl08_ctl00__"><img id="dgResultUG_ctl08_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl08_lbltext__"><span id="dgResultUG_ctl08_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl08_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            8
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl09_lnkResultUG__"><a id="dgResultUG_ctl09_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl09$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Electrical Engineering(EE) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl09_ctl00__"><img id="dgResultUG_ctl09_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl09_lbltext__"><span id="dgResultUG_ctl09_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl09_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            9
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl10_lnkResultUG__"><a id="dgResultUG_ctl10_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl10$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Chemical Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl10_ctl00__"><img id="dgResultUG_ctl10_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl10_lbltext__"><span id="dgResultUG_ctl10_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl10_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            10
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl11_lnkResultUG__"><a id="dgResultUG_ctl11_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl11$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Civil Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl11_ctl00__"><img id="dgResultUG_ctl11_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl11_lbltext__"><span id="dgResultUG_ctl11_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl11_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            11
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl12_lnkResultUG__"><a id="dgResultUG_ctl12_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl12$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Production &amp; Industrial Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl12_ctl00__"><img id="dgResultUG_ctl12_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl12_lbltext__"><span id="dgResultUG_ctl12_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl12_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            12
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl13_lnkResultUG__"><a id="dgResultUG_ctl13_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl13$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Building &amp; Construction Technology (Equivalent to Civil Engineering) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl13_ctl00__"><img id="dgResultUG_ctl13_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl13_lbltext__"><span id="dgResultUG_ctl13_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl13_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            13
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl14_lnkResultUG__"><a id="dgResultUG_ctl14_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl14$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( Petroleum Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl14_ctl00__"><img id="dgResultUG_ctl14_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl14_lbltext__"><span id="dgResultUG_ctl14_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl14_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            14
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl15_lnkResultUG__"><a id="dgResultUG_ctl15_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl15$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( COMPUTER  SCIENCE AND  ENGINEERING(ARTIFICIAL  INTELLIGENCE  AND MACHINE  LEARNING) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl15_ctl00__"><img id="dgResultUG_ctl15_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl15_lbltext__"><span id="dgResultUG_ctl15_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl15_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            15
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl16_lnkResultUG__"><a id="dgResultUG_ctl16_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl16$lnkResultUG','')">B.E.(CBCS) ENGINEERING IIIrd SEM ( ARTIFICIAL INTELLIGENCE AND DATA SCIENCE ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl16_ctl00__"><img id="dgResultUG_ctl16_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl16_lbltext__"><span id="dgResultUG_ctl16_lbltext" style="font-size: 12px; font-family: Calibri">26/05/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl16_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            16
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl17_lnkResultUG__"><a id="dgResultUG_ctl17_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl17$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Electronics &amp; Electrical Engineering(Equivalent to Electrical &amp; Electronics Engineering) ) REGULAR - BACK  Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl17_ctl00__"><img id="dgResultUG_ctl17_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl17_lbltext__"><span id="dgResultUG_ctl17_lbltext" style="font-size: 12px; font-family: Calibri">23/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl17_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            17
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl18_lnkResultUG__"><a id="dgResultUG_ctl18_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl18$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Electronics &amp; Computer Engineering(ECC) ) REGULAR - BACK  Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl18_ctl00__"><img id="dgResultUG_ctl18_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl18_lbltext__"><span id="dgResultUG_ctl18_lbltext" style="font-size: 12px; font-family: Calibri">23/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl18_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            18
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl19_lnkResultUG__"><a id="dgResultUG_ctl19_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl19$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Mechanical Engineering ) REGULAR - BACK  Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl19_ctl00__"><img id="dgResultUG_ctl19_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl19_lbltext__"><span id="dgResultUG_ctl19_lbltext" style="font-size: 12px; font-family: Calibri">23/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl19_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            19
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl20_lnkResultUG__"><a id="dgResultUG_ctl20_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl20$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Mining Engineering ) REGULAR - BACK  Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl20_ctl00__"><img id="dgResultUG_ctl20_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl20_lbltext__"><span id="dgResultUG_ctl20_lbltext" style="font-size: 12px; font-family: Calibri">23/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl20_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            20
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl21_lnkResultUG__"><a id="dgResultUG_ctl21_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl21$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Electronics &amp; Communication Engineering(ECE) ) REGULAR - BACK  Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl21_ctl00__"><img id="dgResultUG_ctl21_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl21_lbltext__"><span id="dgResultUG_ctl21_lbltext" style="font-size: 12px; font-family: Calibri">23/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl21_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            21
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl22_lnkResultUG__"><a id="dgResultUG_ctl22_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl22$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Chemical Engineering ) REGULAR - BACK  Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl22_ctl00__"><img id="dgResultUG_ctl22_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl22_lbltext__"><span id="dgResultUG_ctl22_lbltext" style="font-size: 12px; font-family: Calibri">23/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl22_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            22
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl23_lnkResultUG__"><a id="dgResultUG_ctl23_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl23$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Civil Engineering ) REGULAR - BACK  Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl23_ctl00__"><img id="dgResultUG_ctl23_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl23_lbltext__"><span id="dgResultUG_ctl23_lbltext" style="font-size: 12px; font-family: Calibri">23/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl23_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            23
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl24_lnkResultUG__"><a id="dgResultUG_ctl24_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl24$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Production &amp; Industrial Engineering ) REGULAR - BACK  Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl24_ctl00__"><img id="dgResultUG_ctl24_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl24_lbltext__"><span id="dgResultUG_ctl24_lbltext" style="font-size: 12px; font-family: Calibri">23/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl24_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            24
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl25_lnkResultUG__"><a id="dgResultUG_ctl25_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl25$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Building &amp; Construction Technology (Equivalent to Civil Engineering) ) REGULAR - BACK  Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl25_ctl00__"><img id="dgResultUG_ctl25_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl25_lbltext__"><span id="dgResultUG_ctl25_lbltext" style="font-size: 12px; font-family: Calibri">23/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl25_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            25
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl26_lnkResultUG__"><a id="dgResultUG_ctl26_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl26$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( COMPUTER  SCIENCE AND  ENGINEERING(ARTIFICIAL  INTELLIGENCE  AND MACHINE  LEARNING) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl26_ctl00__"><img id="dgResultUG_ctl26_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl26_lbltext__"><span id="dgResultUG_ctl26_lbltext" style="font-size: 12px; font-family: Calibri">15/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl26_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            26
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl27_lnkResultUG__"><a id="dgResultUG_ctl27_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl27$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Civil Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl27_ctl00__"><img id="dgResultUG_ctl27_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl27_lbltext__"><span id="dgResultUG_ctl27_lbltext" style="font-size: 12px; font-family: Calibri">11/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl27_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            27
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl28_lnkResultUG__"><a id="dgResultUG_ctl28_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl28$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Electrical Engineering(EE) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl28_ctl00__"><img id="dgResultUG_ctl28_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl28_lbltext__"><span id="dgResultUG_ctl28_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl28_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            28
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl29_lnkResultUG__"><a id="dgResultUG_ctl29_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl29$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Chemical Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl29_ctl00__"><img id="dgResultUG_ctl29_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl29_lbltext__"><span id="dgResultUG_ctl29_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl29_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            29
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl30_lnkResultUG__"><a id="dgResultUG_ctl30_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl30$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Petroleum Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl30_ctl00__"><img id="dgResultUG_ctl30_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl30_lbltext__"><span id="dgResultUG_ctl30_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl30_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            30
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl31_lnkResultUG__"><a id="dgResultUG_ctl31_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl31$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Production &amp; Industrial Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl31_ctl00__"><img id="dgResultUG_ctl31_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl31_lbltext__"><span id="dgResultUG_ctl31_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl31_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            31
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl32_lnkResultUG__"><a id="dgResultUG_ctl32_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl32$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( COMPUTER SCIENCE &amp; ENGINEERING(CSE) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl32_ctl00__"><img id="dgResultUG_ctl32_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl32_lbltext__"><span id="dgResultUG_ctl32_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl32_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            32
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl33_lnkResultUG__"><a id="dgResultUG_ctl33_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl33$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Electronics &amp; Communication Engineering(ECE) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl33_ctl00__"><img id="dgResultUG_ctl33_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl33_lbltext__"><span id="dgResultUG_ctl33_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl33_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            33
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl34_lnkResultUG__"><a id="dgResultUG_ctl34_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl34$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Mining Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl34_ctl00__"><img id="dgResultUG_ctl34_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl34_lbltext__"><span id="dgResultUG_ctl34_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl34_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            34
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl35_lnkResultUG__"><a id="dgResultUG_ctl35_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl35$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Information Technology(IT) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl35_ctl00__"><img id="dgResultUG_ctl35_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl35_lbltext__"><span id="dgResultUG_ctl35_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl35_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            35
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl36_lnkResultUG__"><a id="dgResultUG_ctl36_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl36$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Mechanical Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl36_ctl00__"><img id="dgResultUG_ctl36_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl36_lbltext__"><span id="dgResultUG_ctl36_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl36_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            36
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl37_lnkResultUG__"><a id="dgResultUG_ctl37_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl37$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Electronics &amp; Computer Engineering(ECC) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl37_ctl00__"><img id="dgResultUG_ctl37_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl37_lbltext__"><span id="dgResultUG_ctl37_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl37_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            37
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl38_lnkResultUG__"><a id="dgResultUG_ctl38_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl38$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( Electronics &amp; Electrical Engineering(Equivalent to Electrical &amp; Electronics Engineering) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl38_ctl00__"><img id="dgResultUG_ctl38_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl38_lbltext__"><span id="dgResultUG_ctl38_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl38_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            38
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl39_lnkResultUG__"><a id="dgResultUG_ctl39_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl39$lnkResultUG','')">B.E.(CBCS) ENGINEERING Vth SEM ( ARTIFICIAL INTELLIGENCE AND DATA SCIENCE ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl39_ctl00__"><img id="dgResultUG_ctl39_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl39_lbltext__"><span id="dgResultUG_ctl39_lbltext" style="font-size: 12px; font-family: Calibri">01/04/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl39_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            39
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl40_lnkResultUG__"><a id="dgResultUG_ctl40_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl40$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Electronics &amp; Electrical Engineering(Equivalent to Electrical &amp; Electronics Engineering) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl40_ctl00__"><img id="dgResultUG_ctl40_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl40_lbltext__"><span id="dgResultUG_ctl40_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl40_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            40
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl41_lnkResultUG__"><a id="dgResultUG_ctl41_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl41$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Electronics &amp; Computer Engineering(ECC) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl41_ctl00__"><img id="dgResultUG_ctl41_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl41_lbltext__"><span id="dgResultUG_ctl41_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl41_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            41
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl42_lnkResultUG__"><a id="dgResultUG_ctl42_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl42$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Information Technology(IT) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl42_ctl00__"><img id="dgResultUG_ctl42_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl42_lbltext__"><span id="dgResultUG_ctl42_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl42_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            42
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl43_lnkResultUG__"><a id="dgResultUG_ctl43_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl43$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Mechanical Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl43_ctl00__"><img id="dgResultUG_ctl43_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl43_lbltext__"><span id="dgResultUG_ctl43_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl43_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            43
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl44_lnkResultUG__"><a id="dgResultUG_ctl44_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl44$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Mining Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl44_ctl00__"><img id="dgResultUG_ctl44_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl44_lbltext__"><span id="dgResultUG_ctl44_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl44_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            44
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl45_lnkResultUG__"><a id="dgResultUG_ctl45_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl45$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( COMPUTER SCIENCE &amp; ENGINEERING(CSE) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl45_ctl00__"><img id="dgResultUG_ctl45_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl45_lbltext__"><span id="dgResultUG_ctl45_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl45_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            45
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl46_lnkResultUG__"><a id="dgResultUG_ctl46_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl46$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Electronics &amp; Communication Engineering(ECE) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl46_ctl00__"><img id="dgResultUG_ctl46_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl46_lbltext__"><span id="dgResultUG_ctl46_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl46_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            46
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl47_lnkResultUG__"><a id="dgResultUG_ctl47_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl47$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Electrical Engineering(EE) ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl47_ctl00__"><img id="dgResultUG_ctl47_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl47_lbltext__"><span id="dgResultUG_ctl47_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl47_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            47
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl48_lnkResultUG__"><a id="dgResultUG_ctl48_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl48$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Chemical Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl48_ctl00__"><img id="dgResultUG_ctl48_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl48_lbltext__"><span id="dgResultUG_ctl48_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl48_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            48
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl49_lnkResultUG__"><a id="dgResultUG_ctl49_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl49$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Civil Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl49_ctl00__"><img id="dgResultUG_ctl49_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl49_lbltext__"><span id="dgResultUG_ctl49_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl49_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style">
+			<td align="center" style="width:3%;">
+                                                                            49
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl50_lnkResultUG__"><a id="dgResultUG_ctl50_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl50$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Production &amp; Industrial Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl50_ctl00__"><img id="dgResultUG_ctl50_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl50_lbltext__"><span id="dgResultUG_ctl50_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl50_lblConfig__"></span>
+                                                                        </td>
+		</tr><tr class="item-style" style="background-color:WhiteSmoke;">
+			<td align="center" style="width:3%;">
+                                                                            50
+                                                                        </td><td align="left">
+                                                                            <span id="Anthem_dgResultUG_ctl51_lnkResultUG__"><a id="dgResultUG_ctl51_lnkResultUG" href="javascript:__doPostBack('dgResultUG$ctl51$lnkResultUG','')">B.E.(CBCS) ENGINEERING VIIth SEM ( Petroleum Engineering ) Examination Result</a></span>
+                                                                            <span id="Anthem_dgResultUG_ctl51_ctl00__"><img id="dgResultUG_ctl51_ctl00" src="../Images/gif-new.gif" style="border-width:0px;border: none; margin: -3px 0 0 5px;"></span>
+                                                                            <br>
+                                                                            <span id="Anthem_dgResultUG_ctl51_lbltext__"><span id="dgResultUG_ctl51_lbltext" style="font-size: 12px; font-family: Calibri">24/02/2025</span></span>
+                                                                            <span id="Anthem_dgResultUG_ctl51_lblConfig__"></span>
+                                                                        </td>
+		</tr>
+	</tbody></table></div>
+                                                        </ul>
+                                                    </div>
+                                                    <span id="Anthem_lblmessageug__"><span id="lblmessageug" class="lblmessage" style="color:Red;font-style: italic"></span></span>
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+                                    
+</div></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div>
+                        <span id="Anthem_txtcycleid__"></span>
+                        <span id="Anthem_txtConfig__"></span>
+                    </div>
+                </div>
+            </div>
+
+
+        
+
+<script type="text/javascript">
+//<![CDATA[
+WebForm_AutoFocus('txtsearch');//]]>
+</script>
+</form>
+         
+    </section>
+    <div class="loginfooter"><a href="#" class="explogologinpg">ITIhref="#" class="explogologinpg"&gt;ITI</a></div>
+
+<script src="../include/jquery.js"></script>
+<script src="../include/jquery.backstretch.min.js"></script>
+<script>
+    $.backstretch("../img/result-declare.jpg", { speed: 500 });
+</script><div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 600px; width: 800px; z-index: -999999; position: fixed;"><img src="../img/result-declare.jpg" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 1293.1px; height: 600px; max-width: none; z-index: -999999; left: -246.552px; top: 0px;"></div>
+
+
+
+</body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResultJano - Generate Result PDFs</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 py-10">
+  <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl text-center font-semibold mb-4">Generate Result PDFs</h1>
+
+    <form id="roll-number-form" class="space-y-4">
+      <div>
+        <label class="block mb-1">Academic Year</label>
+        <select id="academic-year" class="w-full border rounded p-2" required>
+          <option value="2025">2024-25</option>
+          <option value="2024">2023-24</option>
+          <option value="2023">2022-23</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block mb-1">Exam Type</label>
+        <select id="exam-type" class="w-full border rounded p-2" required>
+          <option value="makeup">Makeup</option>
+          <option value="normal">Normal</option>
+          <option value="reval">Revaluation</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block mb-1">Semester</label>
+        <select id="semester" class="w-full border rounded p-2" required>
+          <option value="1">Semester 1</option>
+          <option value="2">Semester 2</option>
+          <option value="3">Semester 3</option>
+          <option value="4">Semester 4</option>
+          <option value="5">Semester 5</option>
+          <option value="6">Semester 6</option>
+          <option value="7">Semester 7</option>
+          <option value="8">Semester 8</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block mb-1">Branch</label>
+        <select id="branch" class="w-full border rounded p-2" required>
+          <option value="CSE">Computer Science</option>
+          <option value="IT">Information Technology</option>
+          <option value="ECE">Electronics & Communication</option>
+          <option value="EEE">Electrical Engineering</option>
+          <option value="ME">Mechanical Engineering</option>
+          <option value="CE">Civil Engineering</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block mb-1">Start Roll Number</label>
+        <input type="text" id="start-roll" class="w-full border rounded p-2" required placeholder="e.g., 2020UCS2001">
+      </div>
+      <div>
+        <label class="block mb-1">End Roll Number</label>
+        <input type="text" id="end-roll" class="w-full border rounded p-2" required placeholder="e.g., 2020UCS2010">
+      </div>
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Generate PDF</button>
+    </form>
+
+    <div class="mt-6 hidden" id="progress-section">
+      <div class="mb-2 text-sm text-gray-700" id="progress-text"></div>
+      <div class="w-full bg-gray-200 h-4 rounded overflow-hidden">
+        <div id="progress-bar" class="bg-blue-500 h-full transition-all" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div class="mt-4 text-sm text-gray-700 hidden" id="log-section"></div>
+
+    <div class="mt-6 hidden" id="pdf-viewer-section">
+      <h2 class="text-lg font-medium mb-2">Merged PDF Preview:</h2>
+      <iframe id="pdf-iframe" class="w-full h-96 border rounded" style="border: 1px solid #ccc;"></iframe>
+      <a id="download-btn" class="block text-center bg-green-600 text-white mt-4 py-2 rounded hover:bg-green-700" download>Download PDF</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
