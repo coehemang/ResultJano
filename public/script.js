@@ -52,7 +52,7 @@ document
             document.getElementById("current-step").textContent = "Canceled";
           }
 
-          submitButton.textContent = "Genrate PDF";
+          submitButton.textContent = "Generate PDF"; 
           submitButton.classList.remove(
             ...[
               "from-red-500",
@@ -415,10 +415,8 @@ document
     }
   });
 
-// Add event listener for page reload/close
-window.addEventListener("beforeunload", function (e) {
+window.addEventListener("beforeunload", function () {
   if (activeJobId) {
-    // Use sendBeacon for reliable delivery during page unload
     navigator.sendBeacon(`/cancel/${activeJobId}`, JSON.stringify({}));
     console.log(`Auto-canceling job ${activeJobId} due to page reload/close`);
   }

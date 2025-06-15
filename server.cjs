@@ -41,22 +41,6 @@ const ensureJobDir = async (jobId) => {
   return jobDir;
 };
 
-const waitForDownload = async (roll, jobId, timeoutMs = 10000) => {
-  const jobDir = getJobDownloadDir(jobId);
-  console.log(`Waiting for download of roll ${roll} in ${jobDir}, timeout: ${timeoutMs}ms`);
-  const startTime = Date.now();
-  while (Date.now() - startTime < timeoutMs) {
-    const files = await fs.promises.readdir(jobDir);
-    if (files.length > 0) {
-      console.log(`Download completed for roll ${roll}`);
-      return true;
-    }
-    await delay(500);
-  }
-  console.log(`Download timeout for roll ${roll}`);
-  return false;
-};
-
 const cleanFolder = async folder => {
   if (!fs.existsSync(folder)) {
     console.log(`Folder doesn't exist, skipping cleanup: ${folder}`);
@@ -69,7 +53,6 @@ const cleanFolder = async folder => {
   await Promise.all(files.map(file => fs.promises.unlink(path.join(folder, file))));
   console.log(`Folder ${folder} cleaned successfully`);
 };
-
 const deleteJobFolder = async (jobId) => {
   const jobDir = getJobDownloadDir(jobId);
   if (fs.existsSync(jobDir)) {
@@ -78,7 +61,6 @@ const deleteJobFolder = async (jobId) => {
     console.log(`Job folder deleted: ${jobDir}`);
   }
 };
-
 const toRomanNumeral = num => {
   const romanNumerals = { 1: 'Ist', 2: 'IInd', 3: 'IIIrd', 4: 'IVth', 5: 'Vth', 6: 'VIth', 7: 'VIIth', 8: 'VIIIth' };
   return romanNumerals[num] || num.toString();
@@ -86,106 +68,195 @@ const toRomanNumeral = num => {
 
 const createBrowser = async () => {
   console.log('Launching Puppeteer browser');
-  return await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+  return await puppeteer.launch({ 
+    headless: true, 
+    args: [
+      '--no-sandbox', 
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--disable-gpu',
+      '--window-size=1280,720'
+    ]
+  });
 };
 
 const processRolls = async (browser, rolls, websiteURL, semesterType, academicYear, romanSemester, branch, jobId) => {
   console.log(`Processing ${rolls.length} roll numbers`);
   const results = {};
   const jobDir = getJobDownloadDir(jobId);
-  let page;
+  
+  const CONCURRENT_WORKERS = 3;
+  const BATCH_SIZE = Math.min(50, rolls.length);
+  
+  console.log(`Using ${CONCURRENT_WORKERS} concurrent workers with batch size ${BATCH_SIZE}`);
   
   try {
-    page = await browser.newPage();
-    console.log(`New page created for batch processing`);
-    const client = await page.target().createCDPSession();
-    await client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: jobDir });
+    for (let batchStart = 0; batchStart < rolls.length; batchStart += BATCH_SIZE) {
+      const batchEnd = Math.min(batchStart + BATCH_SIZE, rolls.length);
+      console.log(`Processing batch from index ${batchStart} to ${batchEnd-1}`);
+      
+      const batchRolls = rolls.slice(batchStart, batchEnd);
+      let currentIndex = 0;
+      
+      const workers = Array.from({ length: CONCURRENT_WORKERS }, async (_, workerIndex) => {
+        const page = await browser.newPage();
+        console.log(`Worker ${workerIndex+1}: Created new page`);
+        
+        try {
+          page._dialogShown = false; 
+          
+          page.on('dialog', async dialog => {
+            try {
+              console.log(`Worker ${workerIndex+1}: Dialog detected: "${dialog.message()}"`);
+              page._dialogShown = true;
+              
+              await dialog.accept().catch(err => {
+                console.log(`Worker ${workerIndex+1}: Dialog handling note: ${err.message}`);
+              });
+            } catch (err) {
+              console.log(`Worker ${workerIndex+1}: Error handling dialog: ${err.message}`);
+            }
+          });
+          
+          const client = await page.target().createCDPSession();
+          await client.send('Page.setDownloadBehavior', { 
+            behavior: 'allow', 
+            downloadPath: jobDir 
+          });
+          
+          await page.setRequestInterception(true);
+          page.on('request', request => {
+            const resourceType = request.resourceType();
+            if (['image', 'stylesheet', 'font', 'media'].includes(resourceType)) {
+              request.abort();
+            } else {
+              request.continue();
+            }
+          });
 
-    console.log(`Navigating to ${websiteURL}`);
-    await page.goto(websiteURL, { waitUntil: 'networkidle2' });
-    
-    console.log(`Clicking on ${semesterType}Sem${academicYear}`);
-    await page.click(`#link${semesterType}Sem${academicYear}`);
-    await delay(2000);
+          console.log(`Worker ${workerIndex+1}: Navigating to ${websiteURL}`);
+          await page.goto(websiteURL, { waitUntil: 'domcontentloaded' });
+          
+          await page.click(`#link${semesterType}Sem${academicYear}`);
+          await page.waitForNavigation({ waitUntil: 'networkidle0', timeout: 5000 }).catch(() => {});
+          
+          const clicked = await page.evaluate((romanSem, branchName) => {
+            const links = Array.from(document.querySelectorAll('a'));
+            for (const link of links) {
+              if (link.textContent.toLowerCase().includes(romanSem.toLowerCase()) && 
+                  link.textContent.toLowerCase().includes(branchName.toLowerCase())) {
+                link.click(); 
+                return true;
+              }
+            }
+            return false;
+          }, romanSemester, branch);
 
-    console.log(`Attempting to find and click ${romanSemester} semester for ${branch}`);
-    const clicked = await page.evaluate((romanSem, branchName) => {
-      const links = Array.from(document.querySelectorAll('a'));
-      for (const link of links) {
-        if (link.textContent.toLowerCase().includes(romanSem.toLowerCase()) && link.textContent.toLowerCase().includes(branchName.toLowerCase())) {
-          link.click(); return true;
+          if (!clicked) {
+            console.log(`Worker ${workerIndex+1}: Failed to find link for ${romanSemester} semester and ${branch}`);
+            return;
+          }
+
+          await page.waitForSelector('#txtRollNo', { timeout: 5000 }).catch(() => {});
+          
+          while (true) {
+            const rollIndex = currentIndex++;
+            if (rollIndex >= batchRolls.length) break;
+            
+            const roll = batchRolls[rollIndex];
+            jobStore[jobId].lastProcessedRoll = roll;
+            console.log(`Worker ${workerIndex+1}: Processing roll ${roll} (${batchStart + rollIndex + 1}/${rolls.length})`);
+            
+            try {
+              page._dialogShown = false;
+              
+              await page.evaluate(() => document.querySelector('#txtRollNo').value = '');
+              await page.type('#txtRollNo', roll);
+              
+              await page.click('#btnGetResult');
+              
+              await delay(1000);
+              
+              let success = false;
+              
+              if (!page._dialogShown) {
+                const startTime = Date.now();
+                const checkInterval = 100;
+                const maxWaitTime = 3000;
+                
+                while (Date.now() - startTime < maxWaitTime) {
+                  await delay(checkInterval);
+                  const files = await fs.promises.readdir(jobDir);
+                  const pdfFiles = files.filter(f => f.endsWith('.pdf'));
+                  if (pdfFiles.length > 0) {
+                    success = true;
+                    break;
+                  }
+                }
+              }
+              
+              // Update job status
+              results[roll] = success;
+              jobStore[jobId].completed++;
+              
+              if (success) {
+                console.log(`Worker ${workerIndex+1}: Success for roll ${roll}`);
+                jobStore[jobId].successful.push(roll);
+              } else {
+                console.log(`Worker ${workerIndex+1}: No result for roll ${roll} ${page._dialogShown ? '(dialog shown)' : '(no download)'}`);
+                jobStore[jobId].notFound.push(roll);
+              }
+              
+              console.log(`Progress: ${jobStore[jobId].completed}/${jobStore[jobId].total} rolls processed`);
+              
+              // Small delay between rolls to prevent rate limiting
+              await delay(300);
+              
+            } catch (error) {
+              console.error(`Worker ${workerIndex+1}: Error processing roll ${roll}:`, error);
+              jobStore[jobId].notFound.push(roll);
+              jobStore[jobId].completed++;
+              
+              
+              try {
+                await page.goto(websiteURL, { waitUntil: 'domcontentloaded' });
+                await page.click(`#link${semesterType}Sem${academicYear}`);
+                await page.waitForNavigation({ waitUntil: 'networkidle0', timeout: 5000 }).catch(() => {});
+                
+                await page.evaluate((romanSem, branchName) => {
+                  const links = Array.from(document.querySelectorAll('a'));
+                  for (const link of links) {
+                    if (link.textContent.toLowerCase().includes(romanSem.toLowerCase()) && 
+                        link.textContent.toLowerCase().includes(branchName.toLowerCase())) {
+                      link.click(); 
+                      return true;
+                    }
+                  }
+                  return false;
+                }, romanSemester, branch);
+                
+                await page.waitForSelector('#txtRollNo', { timeout: 5000 }).catch(() => {});
+              } catch (navigationError) {
+                console.error(`Worker ${workerIndex+1}: Failed to reload page after error:`, navigationError);
+              }
+            }
+          }
+        } catch (err) {
+          console.error(`Worker ${workerIndex+1}: Fatal error:`, err);
+        } finally {
+          // Remove all listeners before closing the page
+          page.removeAllListeners();
+          console.log(`Worker ${workerIndex+1}: Closing page`);
+          await page.close().catch(() => {});
         }
-      }
-      return false;
-    }, romanSemester, branch);
-
-    if (!clicked) {
-      console.log(`Failed to find link for ${romanSemester} semester and ${branch}`);
-      return {};
-    }
-
-    await delay(2000);
-    await page.waitForSelector('#txtRollNo');
-    
-    for (let i = 0; i < rolls.length; i++) {
-      const roll = rolls[i];
-      jobStore[jobId].lastProcessedRoll = roll; // Track current roll
-      console.log(`Processing roll ${roll} (${i+1}/${rolls.length})`);
-      
-      await page.evaluate(() => document.querySelector('#txtRollNo').value = '');
-      await page.type('#txtRollNo', roll);
-      
-      const dialogPromise = new Promise(resolve => {
-        page.once('dialog', async dialog => {
-          console.log(`Dialog appeared: ${dialog.message()}`);
-          await dialog.accept();
-          resolve(true);
-        });
-        setTimeout(() => resolve(false), 8000);
       });
-
-      console.log(`Clicking get result button for ${roll}`);
       
-      const beforeFiles = await fs.promises.readdir(jobDir);
-      
-      await Promise.all([
-        page.click('#btnGetResult'),
-        page.waitForNavigation({ waitUntil: 'networkidle2' }).catch(() => {
-          console.log('Navigation timeout - this can be normal if download started');
-        })
-      ]);
-
-      const dialog = await dialogPromise;
-      let success = false;
-      
-      if (!dialog) {
-        success = await waitForDownload(roll, jobId);
-      } else {
-        console.log(`Dialog detected for roll ${roll}, no result available`);
-      }
-      
-      results[roll] = success;
-      jobStore[jobId].completed++;
-      
-      if (success) {
-        console.log(`Successfully processed roll ${roll}`);
-        jobStore[jobId].successful.push(roll);
-      } else {
-        console.log(`No result found for roll ${roll}`);
-        jobStore[jobId].notFound.push(roll);
-      }
-      
-      console.log(`Progress: ${jobStore[jobId].completed}/${jobStore[jobId].total} rolls processed`);
-      
-      await delay(800);
+      await Promise.all(workers);
+      console.log(`Completed batch from index ${batchStart} to ${batchEnd-1}`);
     }
   } catch (err) {
     console.error(`Error in batch processing:`, err);
-  } finally {
-    if (page) {
-      console.log(`Closing page after batch processing`);
-      await page.close();
-    }
   }
   
   return results;
@@ -202,7 +273,6 @@ app.post('/result', async (req, res) => {
   const total = end - start + 1;
 
   console.log(`Creating job ${jobId} for rolls ${startRoll} to ${endRoll}, total: ${total}`);
-  // Enhanced job store with more details
   jobStore[jobId] = { 
     status: 'pending', 
     completed: 0, 
@@ -234,14 +304,13 @@ app.post('/result', async (req, res) => {
 
     await cleanFolder(mergedDir);
 
-    // Generate all roll numbers first
-    const rolls = [];
-    for (let i = start; i <= end; i++) {
-      rolls.push(`${prefix}${i.toString().padStart(4, '0')}`);
-    }
+    const rolls = Array.from(
+      { length: end - start + 1 }, 
+      (_, i) => `${prefix}${(start + i).toString().padStart(4, '0')}`
+    );
     
     jobStore[jobId].currentStep = 'processing_rolls';
-    // Process all rolls with a single page
+    
     await processRolls(browser, rolls, websiteURL, semesterType, academicYear, romanSemester, branch, jobId);
 
     console.log('Closing browser');
@@ -270,7 +339,6 @@ app.post('/result', async (req, res) => {
       jobStore[jobId].currentStep = 'error';
       jobStore[jobId].endTime = Date.now();
       
-      // Still try to clean up in case of error
       await deleteJobFolder(jobId);
     }
   } catch (err) {
@@ -280,7 +348,6 @@ app.post('/result', async (req, res) => {
     jobStore[jobId].currentStep = 'error';
     jobStore[jobId].endTime = Date.now();
     
-    // Clean up in case of error
     await deleteJobFolder(jobId);
   }
 });
@@ -385,3 +452,5 @@ function formatTime(totalSeconds) {
 }
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
