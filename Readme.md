@@ -25,8 +25,8 @@ ResultJano is a web application that automates the process of retrieving and mer
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ResultJano1.git
-   cd ResultJano1
+   git clone https://github.com/coehemang/ResultJano.git # or  https://github.com/coehemang/ResultJano.git
+   cd ResultJano
    ```
 
 2. Install dependencies:
