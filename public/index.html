@@ -4,82 +4,134 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ResultJano - Generate Result PDFs</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    input, select, button {
+      transition: all 0.2s ease;
+    }
+    input:focus, select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 py-10">
-  <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
-    <h1 class="text-2xl text-center font-semibold mb-4">Generate Result PDFs</h1>
+<body class="py-10">
+  <div class="max-w-3xl mx-auto">
+    <div class="mb-8 text-center">
+      <h1 class="text-4xl font-bold text-gray-800 mb-2">Result<span class="text-blue-600">Jano</span></h1>
+      <p class="text-gray-600">Generate and manage MBMITE result PDFs with ease</p>
+    </div>
+    
+    <div class="bg-white p-8 rounded-xl shadow-lg card mb-8">
+      <h2 class="text-2xl font-semibold mb-6 text-gray-800 border-b pb-3">Generate Result PDFs</h2>
 
-    <form id="roll-number-form" class="space-y-4">
-      <div>
-        <label class="block mb-1">Academic Year</label>
-        <select id="academic-year" class="w-full border rounded p-2" required>
-          <option value="2025">2024-25</option>
-          <option value="2024">2023-24</option>
-          <option value="2023">2022-23</option>
-        </select>
-      </div>
+      <form id="roll-number-form" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Academic Year</label>
+            <select id="academic-year" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none" required>
+              <option value="2025">2024-25</option>
+              <option value="2024">2023-24</option>
+              <option value="2023">2022-23</option>
+            </select>
+          </div>
 
-      <div>
-        <label class="block mb-1">Exam Type</label>
-        <select id="exam-type" class="w-full border rounded p-2" required>
-          <option value="makeup">Makeup</option>
-          <option value="normal">Normal</option>
-          <option value="reval">Revaluation</option>
-        </select>
-      </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Exam Type</label>
+            <select id="exam-type" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none" required>
+              <option value="makeup">Makeup</option>
+              <option value="normal">Normal</option>
+              <option value="reval">Revaluation</option>
+            </select>
+          </div>
+        </div>
 
-      <div>
-        <label class="block mb-1">Semester</label>
-        <select id="semester" class="w-full border rounded p-2" required>
-          <option value="1">Semester 1</option>
-          <option value="2">Semester 2</option>
-          <option value="3">Semester 3</option>
-          <option value="4">Semester 4</option>
-          <option value="5">Semester 5</option>
-          <option value="6">Semester 6</option>
-          <option value="7">Semester 7</option>
-          <option value="8">Semester 8</option>
-        </select>
-      </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Semester</label>
+            <select id="semester" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none" required>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+              <option value="5">Semester 5</option>
+              <option value="6">Semester 6</option>
+              <option value="7">Semester 7</option>
+              <option value="8">Semester 8</option>
+            </select>
+          </div>
 
-      <div>
-        <label class="block mb-1">Branch</label>
-        <select id="branch" class="w-full border rounded p-2" required>
-          <option value="CSE">Computer Science</option>
-          <option value="IT">Information Technology</option>
-          <option value="ECE">Electronics & Communication</option>
-          <option value="EEE">Electrical Engineering</option>
-          <option value="ME">Mechanical Engineering</option>
-          <option value="CE">Civil Engineering</option>
-        </select>
-      </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Branch</label>
+            <select id="branch" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none" required>
+              <option value="CSE">Computer Science</option>
+              <option value="IT">Information Technology</option>
+              <option value="ECE">Electronics & Communication</option>
+              <option value="EEE">Electrical Engineering</option>
+              <option value="ME">Mechanical Engineering</option>
+              <option value="CE">Civil Engineering</option>
+            </select>
+          </div>
+        </div>
 
-      <div>
-        <label class="block mb-1">Start Roll Number</label>
-        <input type="text" id="start-roll" class="w-full border rounded p-2" required placeholder="e.g., 2020UCS2001">
-      </div>
-      <div>
-        <label class="block mb-1">End Roll Number</label>
-        <input type="text" id="end-roll" class="w-full border rounded p-2" required placeholder="e.g., 2020UCS2010">
-      </div>
-      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Generate PDF</button>
-    </form>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Start Roll Number</label>
+            <input type="text" id="start-roll" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none" required placeholder="e.g., 2020UCS2001">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">End Roll Number</label>
+            <input type="text" id="end-roll" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none" required placeholder="e.g., 2020UCS2010">
+          </div>
+        </div>
+        
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-3 px-6 rounded-lg font-medium hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transform transition-all duration-150 hover:scale-105">
+          Generate PDF
+        </button>
+      </form>
+    </div>
 
-    <div class="mt-6 hidden" id="progress-section">
-      <div class="mb-2 text-sm text-gray-700" id="progress-text"></div>
-      <div class="w-full bg-gray-200 h-4 rounded overflow-hidden">
-        <div id="progress-bar" class="bg-blue-500 h-full transition-all" style="width: 0%;"></div>
+    <div class="bg-white p-8 rounded-xl shadow-lg card hidden mb-8" id="progress-section">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Generation Progress</h2>
+      <div class="mb-3 text-sm text-gray-700" id="progress-text"></div>
+      <div class="w-full bg-gray-200 h-4 rounded-full overflow-hidden">
+        <div id="progress-bar" class="progress-bar bg-gradient-to-r from-blue-400 to-blue-600 h-full" style="width: 0%;"></div>
       </div>
     </div>
 
-    <div class="mt-4 text-sm text-gray-700 hidden" id="log-section"></div>
-
-    <div class="mt-6 hidden" id="pdf-viewer-section">
-      <h2 class="text-lg font-medium mb-2">Merged PDF Preview:</h2>
-      <iframe id="pdf-iframe" class="w-full h-96 border rounded" style="border: 1px solid #ccc;"></iframe>
-      <a id="download-btn" class="block text-center bg-green-600 text-white mt-4 py-2 rounded hover:bg-green-700" download>Download PDF</a>
+    <div class="bg-white p-8 rounded-xl shadow-lg card hidden mb-8" id="log-section">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Process Log</h2>
+      <div class="text-sm text-gray-700 bg-gray-50 p-4 rounded-lg max-h-40 overflow-y-auto"></div>
     </div>
+
+    <div class="bg-white p-8 rounded-xl shadow-lg card hidden" id="pdf-viewer-section">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">PDF Preview</h2>
+      <iframe id="pdf-iframe" class="w-full h-96 border rounded-lg" style="border: 1px solid #e2e8f0;"></iframe>
+      <a id="download-btn" class="block text-center bg-gradient-to-r from-green-500 to-green-700 text-white mt-6 py-3 px-6 rounded-lg font-medium hover:from-green-600 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transform transition-all duration-150 hover:scale-105" download>
+        Download PDF
+      </a>
+    </div>
+  </div>
+
+  <div class="text-center mt-12 mb-6 text-gray-600">
+    <p class="text-sm">Created with ❤️ by Hemang Choudhary (IT 2027) and Mayank Aggarwal (CSE 2027)</p>
+    <p class="text-xs mt-2 text-gray-500">© 2025 ResultJano | All Rights Reserved</p>
   </div>
 
   <script src="script.js"></script>
