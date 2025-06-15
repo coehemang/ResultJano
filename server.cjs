@@ -295,7 +295,6 @@ app.post('/cancel/:jobId', async (req, res) => {
     return res.status(404).json({ error: 'Job not found' });
   }
   
-  // Only allow canceling jobs that are in-progress
   if (job.status !== 'pending') {
     console.log(`Cannot cancel job ${jobId} with status ${job.status}`);
     return res.status(400).json({ error: 'Job cannot be cancelled in its current state' });
