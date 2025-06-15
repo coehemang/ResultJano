@@ -10,6 +10,7 @@ ResultJano is a web application that automates the process of retrieving and mer
 
 - Bulk retrieval of exam results by specifying roll number ranges
 - Real-time progress tracking with detailed status updates
+- Queue system to handle multiple simultaneous requests
 - Automatic merging of multiple result PDFs into a single document
 - PDF preview in the browser
 - Comprehensive logging of the retrieval process
@@ -61,6 +62,16 @@ ResultJano is a web application that automates the process of retrieving and mer
 4. Click "Get Results" to start the retrieval process
 5. Monitor progress in real-time through the status panel
 6. Once complete, preview and download the merged PDF
+
+## Heroku Deployment Notes
+
+When deployed on Heroku, the application:
+
+- Automatically detects the Heroku environment
+- Reduces resource usage by limiting to one concurrent worker
+- Uses smaller batch sizes to avoid timeouts
+- Implements queue system to handle multiple requests
+- Optimizes browser parameters for Heroku's limited resources
 
 ## Configuration
 
