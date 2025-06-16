@@ -139,7 +139,11 @@ const processRolls = async (browser, rolls, websiteURL, semesterType, academicYe
 
     await delay(2000);
     await page.waitForSelector('#txtRollNo');
-    
+    const files = await fs.promises.readdir(jobDir);
+      if (files.length > 0) {
+        await Promise.all(files.map(file => fs.promises.unlink(path.join(jobDir, file))));
+      }
+      
     for (let i = 0; i < rolls.length; i++) {
       const roll = rolls[i];
       jobStore[jobId].lastProcessedRoll = roll; // Track current roll
@@ -165,12 +169,7 @@ const processRolls = async (browser, rolls, websiteURL, semesterType, academicYe
       
       console.log(`Clicking get result button for ${roll}`);
       
-      // Clean the download directory before each attempt for clearer detection
-      const files = await fs.promises.readdir(jobDir);
-      if (files.length > 0) {
-        await Promise.all(files.map(file => fs.promises.unlink(path.join(jobDir, file))));
-      }
-      
+  
       // Click the button and monitor for navigation/download
       await Promise.all([
         page.click('#btnGetResult'),

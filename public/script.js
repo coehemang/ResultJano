@@ -222,17 +222,10 @@ document
 
       if (!submitRes.ok) throw new Error("Job submission failed.");
 
-      const { jobId, queued, queuePosition } = await submitRes.json();
+      const { jobId } = await submitRes.json();
       activeJobId = jobId;
       isJobRunning = true;
-      
-      // Update log message based on queue status
-      if (queued) {
-        log(`📦 Job ID: ${jobId} added to queue at position ${queuePosition}. Please wait...`);
-      } else {
-        log(`📦 Job ID: ${jobId}. Processing started. Polling for progress...`);
-      }
-      
+      log(`📦 Job ID: ${jobId}. Polling for progress...`);
       submitButton.disabled = false;
       submitButton.textContent = "Cancel Job";
       const oldClasses = [
@@ -267,154 +260,125 @@ document
           }
 
           const statusData = await statusRes.json();
-          
-          // Show queue position if job is queued
-          if (statusData.status === "queued") {
-            document.getElementById("current-step").textContent = `Queued (Position: ${statusData.queuePosition})`;
-            // Add queue position to status panel
-            if (!document.getElementById("queue-position-item")) {
-              const queueItem = document.createElement("div");
-              queueItem.id = "queue-position-item";
-              queueItem.className = "status-item";
-              queueItem.innerHTML = `
-                <span class="status-icon">🔄</span> 
-                <span class="status-label">Queue position:</span>
-                <span class="status-value queue-position">${statusData.queuePosition}</span>
-              `;
-              document.querySelector(".status-grid").appendChild(queueItem);
-            } else {
-              document.querySelector(".queue-position").textContent = statusData.queuePosition;
-            }
-            
-            progressText.textContent = `Queued (Position: ${statusData.queuePosition})`;
-            progressBar.style.width = "5%";
-            progressBar.className = "progress-bar bg-info progress-bar-striped progress-bar-animated";
-          } else {
-            // Remove queue item if job is no longer queued
-            const queueItem = document.getElementById("queue-position-item");
-            if (queueItem) {
-              queueItem.remove();
-            }
-            
-            // Continue with normal status updates
-            document.getElementById("current-step").textContent = formatStep(
-              statusData.currentStep || "Unknown"
-            );
-            document.getElementById("elapsed-time").textContent =
-              statusData.elapsedTime?.formatted || "00:00";
-            document.getElementById("last-processed").textContent =
-              statusData.lastProcessedRoll || "-";
-            document.getElementById("success-count").textContent =
-              statusData.successfulCount || 0;
-            document.getElementById("not-found-count").textContent =
-              statusData.notFoundCount || 0;
 
-            const recentlyProcessedSection = document.getElementById(
-              "recently-processed-section"
-            );
-            const recentRollsElement = document.getElementById("recent-rolls");
-            recentRollsElement.innerHTML = "";
+          document.getElementById(
+            "job-id-badge"
+          ).textContent = `Job ID: ${jobId.substring(0, 8)}...`;
+
+          document.getElementById("current-step").textContent = formatStep(
+            statusData.currentStep || "Unknown"
+          );
+          document.getElementById("elapsed-time").textContent =
+            statusData.elapsedTime?.formatted || "00:00";
+          document.getElementById("last-processed").textContent =
+            statusData.lastProcessedRoll || "-";
+          document.getElementById("success-count").textContent =
+            statusData.successfulCount || 0;
+          document.getElementById("not-found-count").textContent =
+            statusData.notFoundCount || 0;
+
+          const recentlyProcessedSection = document.getElementById(
+            "recently-processed-section"
+          );
+          const recentRollsElement = document.getElementById("recent-rolls");
+          recentRollsElement.innerHTML = "";
+
+          if (
+            (statusData.recentSuccessful &&
+              statusData.recentSuccessful.length > 0) ||
+            (statusData.recentNotFound && statusData.recentNotFound.length > 0)
+          ) {
+            recentlyProcessedSection.style.display = "block";
 
             if (
-              (statusData.recentSuccessful &&
-                statusData.recentSuccessful.length > 0) ||
-              (statusData.recentNotFound && statusData.recentNotFound.length > 0)
+              statusData.recentSuccessful &&
+              statusData.recentSuccessful.length > 0
             ) {
-              recentlyProcessedSection.style.display = "block";
-
-              if (
-                statusData.recentSuccessful &&
-                statusData.recentSuccessful.length > 0
-              ) {
-                statusData.recentSuccessful.forEach((roll) => {
-                  const rollElement = document.createElement("span");
-                  rollElement.className = "recent-roll success";
-                  rollElement.textContent = roll;
-                  recentRollsElement.appendChild(rollElement);
-                });
-              }
-
-              if (
-                statusData.recentNotFound &&
-                statusData.recentNotFound.length > 0
-              ) {
-                statusData.recentNotFound.forEach((roll) => {
-                  const rollElement = document.createElement("span");
-                  rollElement.className = "recent-roll failed";
-                  rollElement.textContent = roll;
-                  recentRollsElement.appendChild(rollElement);
-                });
-              }
-            } else {
-              recentlyProcessedSection.style.display = "none";
+              statusData.recentSuccessful.forEach((roll) => {
+                const rollElement = document.createElement("span");
+                rollElement.className = "recent-roll success";
+                rollElement.textContent = roll;
+                recentRollsElement.appendChild(rollElement);
+              });
             }
 
-            if (statusData.status === "pending" || statusData.status === "queued") {
-              if (statusData.status === "pending") {
-                progressText.textContent = statusData.progress || "Processing...";
-                progressBar.style.width = statusData.progressPercent || "0%";
-                progressBar.className = "progress-bar";
+            if (
+              statusData.recentNotFound &&
+              statusData.recentNotFound.length > 0
+            ) {
+              statusData.recentNotFound.forEach((roll) => {
+                const rollElement = document.createElement("span");
+                rollElement.className = "recent-roll failed";
+                rollElement.textContent = roll;
+                recentRollsElement.appendChild(rollElement);
+              });
+            }
+          } else {
+            recentlyProcessedSection.style.display = "none";
+          }
+
+          if (statusData.status === "pending") {
+            progressText.textContent = statusData.progress || "Processing...";
+            progressBar.style.width = statusData.progressPercent || "0%";
+          } else {
+            clearInterval(poll);
+            activeJobId = null;
+            isJobRunning = false;
+
+            submitButton.textContent = "Get Results";
+            submitButton.classList.remove(
+              ...[
+                "from-red-500",
+                "to-red-700",
+                "hover:from-red-600",
+                "hover:to-red-800",
+                "focus:ring-red-500",
+              ]
+            );
+            submitButton.classList.add(
+              ...[
+                "from-blue-500",
+                "to-blue-700",
+                "hover:from-blue-600",
+                "hover:to-blue-800",
+                "focus:ring-blue-500",
+              ]
+            );
+            if (statusData.status === "done") {
+              const { downloadURL, notFoundCount, successfulCount } =
+                statusData;
+
+              progressBar.style.width = "100%";
+              progressText.textContent = `✅ Done: ${successfulCount} found, ${notFoundCount} not found.`;
+
+              if (statusData.notFound?.length > 0) {
+                log("⚠️ Not Found Roll Numbers:");
+                statusData.notFound
+                  .slice(0, 20)
+                  .forEach((roll) => log(`❌ ${roll}`));
+                if (statusData.notFound.length > 20) {
+                  log(`... and ${statusData.notFound.length - 20} more`);
+                }
               }
-            } else {
-              clearInterval(poll);
-              activeJobId = null;
-              isJobRunning = false;
 
-              submitButton.textContent = "Get Results";
-              submitButton.classList.remove(
-                ...[
-                  "from-red-500",
-                  "to-red-700",
-                  "hover:from-red-600",
-                  "hover:to-red-800",
-                  "focus:ring-red-500",
-                ]
-              );
-              submitButton.classList.add(
-                ...[
-                  "from-blue-500",
-                  "to-blue-700",
-                  "hover:from-blue-600",
-                  "hover:to-blue-800",
-                  "focus:ring-blue-500",
-                ]
-              );
-              if (statusData.status === "done") {
-                const { downloadURL, notFoundCount, successfulCount } =
-                  statusData;
-
-                progressBar.style.width = "100%";
-                progressText.textContent = `✅ Done: ${successfulCount} found, ${notFoundCount} not found.`;
-
-                if (statusData.notFound?.length > 0) {
-                  log("⚠️ Not Found Roll Numbers:");
-                  statusData.notFound
-                    .slice(0, 20)
-                    .forEach((roll) => log(`❌ ${roll}`));
-                  if (statusData.notFound.length > 20) {
-                    log(`... and ${statusData.notFound.length - 20} more`);
-                  }
-                }
-
-                if (successfulCount > 0 && downloadURL) {
-                  document.getElementById("pdf-iframe").src = downloadURL;
-                  document.getElementById("download-btn").href = downloadURL;
-                  document
-                    .getElementById("pdf-viewer-section")
-                    .classList.remove("hidden");
-                  log(
-                    `📄 Generated PDF with ${successfulCount} results. You can download it now.`
-                  );
-                } else {
-                  log("❌ No valid roll numbers found. Preview not shown.");
-                }
-              } else if (statusData.status === "canceled") {
-                progressBar.className = "progress-bar bg-warning";
-                progressText.textContent = "Job was canceled";
-                log("⚠️ Job was canceled by user");
+              if (successfulCount > 0 && downloadURL) {
+                document.getElementById("pdf-iframe").src = downloadURL;
+                document.getElementById("download-btn").href = downloadURL;
+                document
+                  .getElementById("pdf-viewer-section")
+                  .classList.remove("hidden");
+                log(
+                  `📄 Generated PDF with ${successfulCount} results. You can download it now.`
+                );
               } else {
-                log(`❌ Error: ${statusData.error || "Unknown failure."}`);
+                log("❌ No valid roll numbers found. Preview not shown.");
               }
+            } else if (statusData.status === "canceled") {
+              progressBar.className = "progress-bar bg-warning";
+              progressText.textContent = "Job was canceled";
+              log("⚠️ Job was canceled by user");
+            } else {
+              log(`❌ Error: ${statusData.error || "Unknown failure."}`);
             }
           }
         } catch (err) {
@@ -460,8 +424,6 @@ window.addEventListener("beforeunload", function () {
 
 function formatStep(step) {
   switch (step) {
-    case "queued":
-      return "Waiting in Queue";
     case "initializing":
       return "Initializing";
     case "processing_rolls":
